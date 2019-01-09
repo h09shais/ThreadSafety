@@ -11,10 +11,17 @@ namespace ThreadSafety
 
             var account = new Account(1000);
             var tasks = new Task[10];
-            for (var i = 0; i < tasks.Length; i++)
+            
+            //for (var i = 0; i < tasks.Length; i++)
+            //{
+            //    tasks[i] = Task.Run(() => RandomlyUpdate(account));
+            //}
+
+            Parallel.For(0, tasks.Length, i =>
             {
                 tasks[i] = Task.Run(() => RandomlyUpdate(account));
-            }
+            });
+
             Task.WaitAll(tasks);
 
             Console.ReadKey();
